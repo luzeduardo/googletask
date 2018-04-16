@@ -1,0 +1,8 @@
+{
+  "presets": ["es2016", "env", "react"],
+  "plugins": [
+    "transform-es2015-destructuring", 
+    "transform-object-rest-spread", 
+    "babel-plugin-transform-class-properties"
+  ]
+}
