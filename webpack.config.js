@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 const config = {
   target: 'web',
@@ -92,6 +93,8 @@ config.plugins = [
   ...config.plugins,
   new CompressionPlugin({
     algorithm: 'gzip'
-  })
+  }),
+  new Dotenv()
 ]
+
 module.exports = config
