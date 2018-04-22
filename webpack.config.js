@@ -3,6 +3,11 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const WebpackPwaManifest = require('webpack-pwa-manifest')
+
+const PUBLIC_PATH = 'https://a92a8ea1.ngrok.io/'
+// const PUBLIC_PATH = 'http://localhost:3000/'
 
 const config = {
   target: 'web',
@@ -12,10 +17,16 @@ const config = {
       public: path.resolve(__dirname, 'public/')
     }
   },
+  entry: ['babel-polyfill', './src/index.js'],
+  output: {
+    path: path.resolve(__dirname, 'dist/'),
+    filename: '[name]-[hash].js',
+    publicPath: PUBLIC_PATH
+  },
   module: {
     rules: [
       {
-        test: /\.(scss|css)$/,
+        test: /\.(sass|scss|css)$/,
         use: [ 'style-loader', 'css-loader' ]
       },
       {
@@ -53,9 +64,34 @@ const config = {
     ]
   },
   plugins: [
+    new SWPrecacheWebpackPlugin(
+      {
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        filename: 'service-worker.js',
+        minify: true,
+        navigateFallback: PUBLIC_PATH + 'index.html',
+        staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
+      }
+    ),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html'
+    }),
+    new WebpackPwaManifest({
+      name: 'PG Tasks',
+      short_name: 'PTasks',
+      description: 'Do it!',
+      background_color: '#01579b',
+      theme_color: '#01579b',
+      'theme-color': '#01579b',
+      start_url: '/',
+      icons: [
+        {
+          src: path.resolve('src/image/icons/icon-72x72.png'),
+          sizes: [96, 128, 192, 256, 384, 512],
+          destination: path.join('assets', 'icons')
+        }
+      ]
     })
   ]
 }

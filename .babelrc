@@ -1,8 +1,18 @@
 {
-  "presets": ["es2016", "env", "react", "flow"],
+  "presets": [["es2015", {"modules":false}], "env", "react", "flow", "stage-0"],
   "plugins": [
     "transform-es2015-destructuring", 
     "transform-object-rest-spread", 
-    "babel-plugin-transform-class-properties"
+    "babel-plugin-transform-class-properties",
+    "transform-es2015-typeof-symbol",
+    "transform-async-to-generator",
+    ["transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
+    "add-module-exports"
   ]
 }

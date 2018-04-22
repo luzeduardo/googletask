@@ -1,50 +1,21 @@
 import React from 'react'
+import { Switch, HashRouter, Route } from 'react-router-dom'
+import Private from 'src/components/container/Private'
+import TasksPage from 'src/components/container/TasksPage'
 
-class GeneralErrorBoundary extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      hasError: false
-    }
-  }
+import LoginPage from 'src/components/container/LoginPage'
 
-  componentDidCatch (error, info) {
-    this.setState({
-      hasError: true
-    })
-  }
-
-  render () {
-    if (this.state.hasError) {
-      return <div>Ooopsss! Something is wrong!</div>
-    } else {
-      return this.props.children
-    }
-  }
-}
 class App extends React.Component {
-  constructor (props) {
-    super(props)
-    this.changeParentState = this.changeParentState.bind(this)
-
-    this.state = {
-      changes: 0
-    }
-  }
-
-  changeParentState () {
-    this.setState({
-      changes: this.state.changes + 1
-    })
-  }
-
   render () {
     return (
-      <div>
-        <GeneralErrorBoundary>
-          <div />
-        </GeneralErrorBoundary>
-      </div>
+      <HashRouter>
+        <Switch>
+          <Route exact path='/' component={LoginPage} />
+          <Route exact path='/login' component={LoginPage} />
+          <Private exact path='/tasks' component={TasksPage}/>
+          {/* <Route component={NotFound} /> */}
+        </Switch>
+      </HashRouter>
     )
   }
 }

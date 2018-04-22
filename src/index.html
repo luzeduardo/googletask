@@ -5,6 +5,25 @@
         <meta charset="utf-8">
         <title>Google Task</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Personal Google Tasks">
+        <!-- <link rel="canonical" href="https://a92a8ea1.ngrok.io/"/>
+        <link rel="alternate" href="https://a92a8ea1.ngrok.io/" hreflang="x-default" />        
+        <link rel="canonical" href="https://a92a8ea1.ngrok.io/"/>
+        <link rel="alternate" href="https://a92a8ea1.ngrok.io/" hreflang="x-default" /> -->
+        <script async defer src="https://apis.google.com/js/api:client.js"></script>
+        <script async defer>
+            (function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./service-worker.js', {scope: '/'})
+                .then(() => console.log('SW registered successfully.'))
+                .catch(error => console.log('SW registration failed:', error));
+            }
+            })();
+        </script>
+        <noscript>
+            <p>It is a PWA for Personal Tasks!</p>            
+            <p>Sorry, but JS is required today!</p>            
+        </noscript>
     </head>
     <body>
         <div id="app" />
