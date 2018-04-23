@@ -4,8 +4,7 @@ import { doLogin, doLogoff } from 'src/sagas/user'
 function * rootSaga () {
   yield all([
     takeLatest('DO_LOGIN', doLogin),
-    takeLatest('DO_LOGOFF', doLogoff),
-    // takeLatest('GET_USER_DATA', doGetUserData),
+    takeLatest('DO_LOGOFF', doLogoff)
   ])
 }
 

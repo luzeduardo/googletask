@@ -1,15 +1,25 @@
 import React, { Component } from 'react'
-// import 'App.css'
-// import logo from 'logo.svg'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { doLogoff } from 'src/actions/index'
 
 class Base extends Component {
+  constructor (props) {
+    super(props)
+    this.takeOff = this.takeOff.bind(this)
+  }
+
+  takeOff () {
+    this.props.doLogoff()
+  }
+
   render () {
-    console.log('asdasdsdad')
+    console.log(this.props)
     return (
       <div className="auth">
         <header className="auth__header">
-          {/* <img alt="Tasks" src={logo} /> */}
           <p className="auth__header__intro">Personal Tasks</p>
+          <button type="button" onClick={this.takeOff}>Logoff!</button>
         </header>
         <div className="auth__body">
           {this.props.children}
@@ -18,5 +28,12 @@ class Base extends Component {
     )
   }
 }
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      doLogoff
+    },
+    dispatch
+  )
 
-export default Base
+export default (connect(null, mapDispatchToProps)(Base))

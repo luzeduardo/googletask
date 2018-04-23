@@ -6,8 +6,8 @@ var staticPath = path.join(__dirname, '/dist')
 app.use(compression())
 app.use(express.static(staticPath))
 
-app.get('/', function (req, res) {
-  res.render('index.html')
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, '/dist/index.html'))
 })
 
 app.listen(3000, function () {

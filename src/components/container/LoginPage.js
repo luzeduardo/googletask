@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Login from 'src/components/Login'
+import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { doLogin, doLogoff } from 'src/actions/index'
 class LoginPage extends React.Component {
@@ -11,10 +12,7 @@ class LoginPage extends React.Component {
 
   take (payload) {
     this.props.doLogin(payload)
-  }
-
-  takeOff (payload) {
-    this.props.doLogoff(payload)
+    browserHistory.push('/login')    
   }
 
   render () {
