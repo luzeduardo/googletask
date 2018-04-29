@@ -4,10 +4,9 @@ import { Redirect, withRouter } from 'react-router'
 import { reactLocalStorage } from 'reactjs-localstorage'
 import Base from 'src/components/container/Base'
 
-const logged = reactLocalStorage.get('usertoken')
 const Private = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    logged ? (
+    reactLocalStorage.get('usertoken') ? (
       <Base>
         <Component {...props}/>
       </Base>

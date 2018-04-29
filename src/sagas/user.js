@@ -19,7 +19,7 @@ export function * doLogin ({ usertoken }) {
 
 export function * doLogoff () {
   try {
-    yield reactLocalStorage.set('usertoken', null)
+    yield reactLocalStorage.clear('usertoken')
 
     yield put({
       type: 'LOGOFF_USER',

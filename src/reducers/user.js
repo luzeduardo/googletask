@@ -17,6 +17,7 @@ export default (state = initialState, action) => {
 
     case 'LOGOFF_USER':
       setToken(null)
+      setHasLogout(true)
 
       return {
         ...state,

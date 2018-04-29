@@ -1,21 +1,33 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Login from 'src/components/Login'
-import { browserHistory } from 'react-router'
+import { reactLocalStorage } from 'reactjs-localstorage'
+import { Redirect } from 'react-router'
 import { bindActionCreators } from 'redux'
+
+import Login from 'src/components/Login'
 import { doLogin, doLogoff } from 'src/actions/index'
+
 class LoginPage extends React.Component {
   constructor (props) {
     super(props)
+    const stillLogged = reactLocalStorage.get('usertoken')
+    this.state = {
+      stillLogged
+    }
     this.take = this.take.bind(this)
   }
 
   take (payload) {
-    this.props.doLogin(payload)
-    browserHistory.push('/login')    
+    if (!this.state.stillLogged) {
+      this.props.doLogin(payload)
+    }
   }
 
   render () {
+    if (this.props.user.usertoken || this.state.stillLogged) {
+      return <Redirect to='/tasks' />
+    }
+
     return (
       <div>
         <Login take={this.take}/>
@@ -25,7 +37,7 @@ class LoginPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.userReducer.user
+  user: state.userReducer
 })
 
 const mapDispatchToProps = dispatch =>
