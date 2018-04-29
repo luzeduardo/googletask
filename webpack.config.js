@@ -6,8 +6,8 @@ const Dotenv = require('dotenv-webpack')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 
-let PUBLIC_PATH = 'http://localhost:3000/'
-if (process.env.NODE_ENV !== 'production') {
+let PUBLIC_PATH = 'http://localhost:8000/'
+if (process.env.NODE_ENV === 'production') {
   PUBLIC_PATH = 'https://a92a8ea1.ngrok.io/'
 }
 
