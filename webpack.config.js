@@ -6,8 +6,10 @@ const Dotenv = require('dotenv-webpack')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 
-const PUBLIC_PATH = 'https://a92a8ea1.ngrok.io/'
-// const PUBLIC_PATH = 'http://localhost:3000/'
+let PUBLIC_PATH = 'http://localhost:3000/'
+if (process.env.NODE_ENV !== 'production') {
+  PUBLIC_PATH = 'https://a92a8ea1.ngrok.io/'
+}
 
 const config = {
   target: 'web',
@@ -64,34 +66,9 @@ const config = {
     ]
   },
   plugins: [
-    new SWPrecacheWebpackPlugin(
-      {
-        dontCacheBustUrlsMatching: /\.\w{8}\./,
-        filename: 'service-worker.js',
-        minify: true,
-        navigateFallback: PUBLIC_PATH + 'index.html',
-        staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
-      }
-    ),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html'
-    }),
-    new WebpackPwaManifest({
-      name: 'PG Tasks',
-      short_name: 'PTasks',
-      description: 'Do it!',
-      background_color: '#01579b',
-      theme_color: '#01579b',
-      'theme-color': '#01579b',
-      start_url: '/',
-      icons: [
-        {
-          src: path.resolve('src/image/icons/icon-72x72.png'),
-          sizes: [96, 128, 192, 256, 384, 512],
-          destination: path.join('assets', 'icons')
-        }
-      ]
     })
   ]
 }
@@ -132,5 +109,36 @@ config.plugins = [
   }),
   new Dotenv()
 ]
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins = [
+    ...config.plugins,
+    new SWPrecacheWebpackPlugin(
+      {
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        filename: 'service-worker.js',
+        minify: true,
+        navigateFallback: PUBLIC_PATH + 'index.html',
+        staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
+      }
+    ),
+    new WebpackPwaManifest({
+      name: 'PG Tasks',
+      short_name: 'PTasks',
+      description: 'Do it!',
+      background_color: '#01579b',
+      theme_color: '#01579b',
+      'theme-color': '#01579b',
+      start_url: '/',
+      icons: [
+        {
+          src: path.resolve('src/image/icons/icon-72x72.png'),
+          sizes: [96, 128, 192, 256, 384, 512],
+          destination: path.join('assets', 'icons')
+        }
+      ]
+    })
+  ]
+}
 
 module.exports = config

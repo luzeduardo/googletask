@@ -28,7 +28,8 @@
     "reactjs-localstorage": "^0.0.6",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "require-path": "^0.3.0"
+    "require-path": "^0.3.0",
+    "html-webpack-plugin": "^3.2.0"    
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -60,7 +61,6 @@
     "file-loader": "^1.1.11",
     "flow-bin": "^0.70.0",
     "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.2",
     "jest-cli": "^22.4.2",
@@ -80,12 +80,12 @@
     "webpack-pwa-manifest": "^3.6.2"
   },
   "scripts": {
-    "dev": "webpack --mode development --module-bind js=babel-loader && node server.js",
-    "build": "webpack --mode production --optimize-minimize --module-bind js=babel-loader",
+    "dev": "NODE_ENV=development webpack --debug=true --progress=true --display-error-details=true --mode development --module-bind js=babel-loader && node server.js",
+    "build": "NODE_ENV=production webpack --env.NODE_ENV=production --mode production --optimize-minimize --module-bind js=babel-loader",
     "watch": "webpack --mode development --module-bind js=babel-loader --watch",
     "test": "node node_modules/jest/bin/jest.js --watch",
     "coverage": "node node_modules/jest/bin/jest.js --watch --silent --coverage",
-    "start": "webpack --mode production --optimize-minimize --module-bind js=babel-loader && node server.js"
+    "start": "NODE_ENV=production webpack --mode production --optimize-minimize --module-bind js=babel-loader && node server.js"
   },
   "jest": {
     "resolver": "jest-webpack-resolver",

@@ -1,5 +1,6 @@
 ## What's this project?
-Choose your tasks
+It is a new way/interface to controle google tasks with PWA.
+With new services provided by another AWS services like Polly and Rekognition
 
 ## Locally
 ```bash
