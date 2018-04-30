@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Redirect } from 'react-router'
 import { doLogoff } from 'src/actions/index'
 
 class Base extends Component {
@@ -14,7 +15,10 @@ class Base extends Component {
   }
 
   render () {
-    console.log(this.props)
+    // if (!this.props.user.usertoken) {
+    //   return <Redirect to='/login' />
+    // }
+
     return (
       <div className="auth">
         <header className="auth__header">
@@ -28,6 +32,10 @@ class Base extends Component {
     )
   }
 }
+const mapStateToProps = state => ({
+  user: state.userReducer
+})
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -36,4 +44,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default (connect(null, mapDispatchToProps)(Base))
+export default (connect(mapStateToProps, mapDispatchToProps)(Base))

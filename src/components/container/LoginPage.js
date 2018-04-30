@@ -10,21 +10,24 @@ import { doLogin, doLogoff } from 'src/actions/index'
 class LoginPage extends React.Component {
   constructor (props) {
     super(props)
-    const stillLogged = reactLocalStorage.get('usertoken')
-    this.state = {
-      stillLogged
-    }
     this.take = this.take.bind(this)
   }
 
+  state = {
+    stillLogged: reactLocalStorage.get('usertoken')
+  }
+
   take (payload) {
-    if (!this.state.stillLogged) {
+    this.setState({
+      stillLogged: payload
+    })
+    if (this.state.stillLogged) {
       this.props.doLogin(payload)
     }
   }
 
   render () {
-    if (this.props.user.usertoken || this.state.stillLogged) {
+    if (this.state.stillLogged) {
       return <Redirect to='/tasks' />
     }
 
@@ -35,7 +38,6 @@ class LoginPage extends React.Component {
     )
   }
 }
-
 const mapStateToProps = state => ({
   user: state.userReducer
 })
